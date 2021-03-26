@@ -14,30 +14,47 @@ namespace BusinessLogic.Calculation
         private int _duelistsCount;
         private int _championCount;
         private double _luckCoef;
+        private int _maxIterationCount;
+        private int _maxIterationStrengthNotChanged;
 
-        public DuelistAlgorithm(List<Point> allSkills)
+        public DuelistAlgorithm(List<Point> allSkills, AlgorithmConfig config)
         {
             _allSkills = allSkills;
             _n = allSkills.Count;
-            _duelistsCount = (int) Math.Sqrt(_n) + 2;
-            _championCount = _duelistsCount / 5;
-            if ((_duelistsCount - _championCount) % 2 != 0)
-            {
-                _championCount++;
-            }
-            _luckCoef = 0.2;
+            _duelistsCount = config.DuelistsCount;
+            _championCount = config.ChamptionCount;
+            _luckCoef = config.LuckCoef;
+            _maxIterationCount = config.MaxIterationCount;
+            _maxIterationStrengthNotChanged = config.MaxStrengthNotChangedIterationCount;
         }
 
         public Dictionary<List<int>, double> Run()
         {
+            int iterationStrengthNotChanged = 0;
+            double maxStrength = 0;
             Registration();
             CalculateStrength();
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < _maxIterationCount; i++)
             {
                 Duel();
                 CalculateStrength();
                 CloneChampions();
                 RemoveWorstDuelists();
+                double currentMaxStrength = _duelistsPoolToStrength.Values.First();
+                if (maxStrength == currentMaxStrength)
+                {
+                    iterationStrengthNotChanged++;
+                    if (iterationStrengthNotChanged == _maxIterationStrengthNotChanged)
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    iterationStrengthNotChanged = 0;
+                    maxStrength = currentMaxStrength;
+                }
+
             }
 
             return _duelistsPoolToStrength;

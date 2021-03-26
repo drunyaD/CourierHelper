@@ -46,7 +46,8 @@ namespace ChartHelper
                 });
             }
 
-            var algo = new DuelistAlgorithm(initialPoints);
+            var config = new AlgorithmConfigProvider().ProvideConfig(initialPoints.Count);
+            var algo = new DuelistAlgorithm(initialPoints, config);
             var result = algo.Run();
             var points = result.Keys.First();
 
