@@ -14,7 +14,8 @@ namespace BusinessLogic.Calculation
             }
             double luckCoef = 0.2;
             int iterationCount = 1000;
-            int strengthNotChangeIterCount = 40;
+            int strengthNotChangeIterCount = 100;
+            int fixedPoints = 1;
 
             return new AlgorithmConfig
             {
@@ -22,7 +23,8 @@ namespace BusinessLogic.Calculation
                 ChamptionCount = championCount,
                 LuckCoef = luckCoef,
                 MaxIterationCount = iterationCount,
-                MaxStrengthNotChangedIterationCount = strengthNotChangeIterCount
+                MaxStrengthNotChangedIterationCount = strengthNotChangeIterCount,
+                FixedPoints = fixedPoints
             };
         }
     }

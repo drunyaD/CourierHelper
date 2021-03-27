@@ -1,13 +1,15 @@
-﻿using System;
+﻿using BusinessLogic.DataModel;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
 namespace BusinessLogic.Calculation
 {
-    public class DuelistAlgorithm
+    public class DuelistAlgorithm<TPoint> where TPoint : IDistancable<TPoint>
     {
-        private List<Point> _allSkills;      
+        private int _fixedPoints;
+        private List<TPoint> _allSkills;      
         private Dictionary<List<int>, double> _duelistsPoolToStrength = new();
         private readonly Random _random = new();
         private int _n;
@@ -17,7 +19,8 @@ namespace BusinessLogic.Calculation
         private int _maxIterationCount;
         private int _maxIterationStrengthNotChanged;
 
-        public DuelistAlgorithm(List<Point> allSkills, AlgorithmConfig config)
+
+        public DuelistAlgorithm(List<TPoint> allSkills, AlgorithmConfig config)
         {
             _allSkills = allSkills;
             _n = allSkills.Count;
@@ -26,6 +29,7 @@ namespace BusinessLogic.Calculation
             _luckCoef = config.LuckCoef;
             _maxIterationCount = config.MaxIterationCount;
             _maxIterationStrengthNotChanged = config.MaxStrengthNotChangedIterationCount;
+            _fixedPoints = config.FixedPoints;
         }
 
         public Dictionary<List<int>, double> Run()
@@ -65,7 +69,9 @@ namespace BusinessLogic.Calculation
             for (int i = 0; i < _duelistsCount; i++)
             {
                 var duelist = new List<int>();
-                var remainingSkills = Enumerable.Range(0, _n).ToList();
+                // First point should not be changed
+                duelist.Add(0);
+                var remainingSkills = Enumerable.Range(1, _n - 1).ToList();
                 while (remainingSkills.Count != 0)
                 {
                     int skillNumber = _random.Next(remainingSkills.Count);
@@ -84,7 +90,7 @@ namespace BusinessLogic.Calculation
                 double distance = 0;
                 for (int i = 0; i < duelist.Count - 1; i++)
                 {
-                    distance += CalculateDistance(_allSkills[duelist[i]], _allSkills[duelist[i+1]]);
+                    distance += _allSkills[duelist[i]].GetDistance(_allSkills[duelist[i+1]]);
                 }
 
                 _duelistsPoolToStrength[duelist] = 1 / distance;
@@ -178,16 +184,16 @@ namespace BusinessLogic.Calculation
             var newWinner = new List<int>(winner); 
             // Winner is trying new thing (swap two skills)
             var availableSkills = new List<int>(newWinner);
-            var firstSkillIndex = _random.Next(_n);
-            var firstSkill = newWinner[firstSkillIndex];
+            var firstSkillIndex = _random.Next(1, _n);
+            var firstSkill = availableSkills[firstSkillIndex];
 
             availableSkills.RemoveAt(firstSkillIndex);
 
-            var secondSkillIndex = _random.Next(_n - 1);
-            var secondSkill = newWinner[secondSkillIndex];
+            var secondSkillIndex = _random.Next(1, _n - 1);
+            var secondSkill = availableSkills[secondSkillIndex];
 
-            newWinner[firstSkillIndex] = secondSkill;
-            newWinner[secondSkillIndex] = firstSkill;
+            newWinner[winner.IndexOf(firstSkill)] = secondSkill;
+            newWinner[winner.IndexOf(secondSkill)] = firstSkill;
 
             return newWinner;
         }
@@ -197,33 +203,48 @@ namespace BusinessLogic.Calculation
             // Looser is taking the second part of the skillset from the order in winner
             // https://cad.kpi.ua/attachments/141_2012_004s.pdf (orderly crosses)
 
+            int partToModify = _random.Next(2);
             int firstPartCount = _n / 2;
-            var newLooser = looser.Take(firstPartCount).ToList();
+            var newLooser = new List<int>();
 
-            var indexInWinnerToSkill = new SortedDictionary<int, int>();
-            for (int i = firstPartCount; i < _n; i++)
+            if (partToModify == 0)
             {
-                var skill = looser[i];
-                var indexInWinner = winner.IndexOf(skill);
-                indexInWinnerToSkill.Add(indexInWinner, skill);
+                newLooser.Add(0);
+                int secondPartCount = _n - firstPartCount;              
+                var secondPart = looser.Skip(firstPartCount).Take(secondPartCount);
+
+                var indexInWinnerToSkill = new SortedDictionary<int, int>();
+                for (int i = 1; i < firstPartCount; i++)
+                {
+                    var skill = looser[i];
+                    var indexInWinner = winner.IndexOf(skill);
+                    indexInWinnerToSkill.Add(indexInWinner, skill);
+                }
+                foreach (var indexToSkill in indexInWinnerToSkill)
+                {
+                    newLooser.Add(indexToSkill.Value);
+                }
+                newLooser.AddRange(secondPart);
             }
+            else
+            {               
+                newLooser.AddRange(looser.Take(firstPartCount));
 
-            foreach (var indexToSkill in indexInWinnerToSkill)
-            {
-                newLooser.Add(indexToSkill.Value);
+                var indexInWinnerToSkill = new SortedDictionary<int, int>();
+                for (int i = firstPartCount; i < _n; i++)
+                {
+                    var skill = looser[i];
+                    var indexInWinner = winner.IndexOf(skill);
+                    indexInWinnerToSkill.Add(indexInWinner, skill);
+                }
+
+                foreach (var indexToSkill in indexInWinnerToSkill)
+                {
+                    newLooser.Add(indexToSkill.Value);
+                }             
             }
 
             return newLooser;
-        }
-
-        private double CalculateDistance(Point point1, Point point2)
-        {
-            var distX = point2.X - point1.X;
-            var distY = point2.Y - point1.Y;
-
-            var result = Math.Sqrt(distX * distX + distY * distY);
-
-            return result;
         }
     }
 }
