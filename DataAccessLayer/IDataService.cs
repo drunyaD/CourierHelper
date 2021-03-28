@@ -7,7 +7,8 @@ namespace DataAccessLayer
     public interface IDataService
     {
         Task<GeocodeResponse> GetGeocodeResponseAsync(string address);
-        Task<DirectionsResponse> GetDirectionsResponseAsync(List<string> addresses, TravelMode travelMode);
-        Task<DirectionsResponse> GetDirectionsResponseAsync(List<Location> coordinates, TravelMode travelMode);
+        Task<DirectionsResponse> GetDirectionsResponseByAddressesAsync(List<string> addresses, TravelMode travelMode);
+        Task<DirectionsResponse> GetDirectionsResponseByPlacesIdAsync(List<string> placeIds, TravelMode travelMode);
+        Task<DirectionsResponse> GetDirectionsResponseByLocationsAsync(List<Location> coordinates, TravelMode travelMode);
     }
 }
