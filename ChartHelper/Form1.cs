@@ -1,5 +1,5 @@
 ﻿using BusinessLogic.Calculation;
-using BusinessLogic.DataModel;
+using BusinessLogic.DataModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -95,6 +95,55 @@ namespace ChartHelper
                     Y = 900
                 }
             };
+
+            /*var initialPoints = new List<Coordinate>
+            {
+                new Coordinate
+                {
+                    Latitude = 300,
+                    Longitude = 300
+                },
+                new Coordinate
+                {
+                    Latitude = 100,
+                    Longitude = 100
+                },
+                new Coordinate
+                {
+                    Latitude = 550,
+                    Longitude = 50
+                },
+                new Coordinate
+                {
+                    Latitude = 1000,
+                    Longitude = 900
+                },
+                new Coordinate
+                {
+                    Latitude = 800,
+                    Longitude = 700
+                },
+                new Coordinate
+                {
+                    Latitude = 250,
+                    Longitude = 750
+                },
+                new Coordinate
+                {
+                    Latitude = 1200,
+                    Longitude = 800
+                },
+                new Coordinate
+                {
+                    Latitude = 600,
+                    Longitude = 600
+                },
+                new Coordinate
+                {
+                    Latitude = 444,
+                    Longitude = 900
+                }
+            };*/
 
             var paintPoints = initialPoints.Select(p => new Point(p.X, p.Y)).ToList();
 

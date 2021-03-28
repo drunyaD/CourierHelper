@@ -1,4 +1,4 @@
-﻿namespace BusinessLogic.DataModel
+﻿namespace BusinessLogic.DataModels
 {
     public interface IDistancable<TPoint>
     {

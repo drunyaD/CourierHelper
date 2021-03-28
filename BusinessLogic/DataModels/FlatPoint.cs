@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BusinessLogic.DataModel
+namespace BusinessLogic.DataModels
 {
     public class FlatPoint : IDistancable<FlatPoint>
     {
