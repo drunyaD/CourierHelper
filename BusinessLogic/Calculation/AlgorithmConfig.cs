@@ -11,7 +11,5 @@
         public int MaxIterationCount { get; set; }
 
         public int MaxStrengthNotChangedIterationCount { get; set; }
-
-        public int FixedPoints { get; set; }
     }
 }

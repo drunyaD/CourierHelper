@@ -8,17 +8,15 @@ namespace BusinessLogic.Calculation
 {
     public class DuelistAlgorithm<TPoint> where TPoint : IDistancable<TPoint>
     {
-        private int _fixedPoints;
-        private List<TPoint> _allSkills;      
-        private Dictionary<List<int>, double> _duelistsPoolToStrength = new();
+        private readonly List<TPoint> _allSkills;              
         private readonly Random _random = new();
-        private int _n;
-        private int _duelistsCount;
-        private int _championCount;
-        private double _luckCoef;
-        private int _maxIterationCount;
-        private int _maxIterationStrengthNotChanged;
-
+        private readonly int _n;
+        private readonly int _duelistsCount;
+        private readonly int _championCount;
+        private readonly double _luckCoef;
+        private readonly int _maxIterationCount;
+        private readonly int  _maxIterationStrengthNotChanged;
+        private Dictionary<List<int>, double> _duelistsPoolToStrength = new();
 
         public DuelistAlgorithm(List<TPoint> allSkills, AlgorithmConfig config)
         {
@@ -29,7 +27,6 @@ namespace BusinessLogic.Calculation
             _luckCoef = config.LuckCoef;
             _maxIterationCount = config.MaxIterationCount;
             _maxIterationStrengthNotChanged = config.MaxStrengthNotChangedIterationCount;
-            _fixedPoints = config.FixedPoints;
         }
 
         public Dictionary<List<int>, double> Run()
