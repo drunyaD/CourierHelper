@@ -21,7 +21,11 @@ def get_recorded_location_infos():
         return data
 
 def get_optimized_route(locations):
-    response = requests.post(url = optimized_route_url, json = locations, verify=False)
+    payload = {
+        'startLocation': locations[0],
+        'locationsToVisit': locations[1:]
+    }
+    response = requests.post(url = optimized_route_url, json = payload, verify=False)
     data = response.json()
     return data
     

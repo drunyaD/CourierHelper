@@ -6,6 +6,6 @@ namespace BusinessLogic.Services
 {
     public interface IRouteService
     {
-        public Task<OptimizedRoute> GetOptimizedRouteAsync(List<LocationInfo> locationInfos);
+        public Task<OptimizedRoute> GetOptimizedRouteAsync(LocationInfo startLocation, List<LocationInfo> locationsToVisit);
     }
 }

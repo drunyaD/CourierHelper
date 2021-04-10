@@ -1,5 +1,6 @@
 ﻿using BusinessLogic.Calculation;
 using BusinessLogic.Services;
+using CourierHelper.Host.Validators;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CourierHelper.Host.Infra
@@ -11,6 +12,7 @@ namespace CourierHelper.Host.Infra
             services.AddScoped<IAlgorithmConfigProvider, AlgorithmConfigProvider>();
             services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<IRouteService, RouteService>();
+            services.AddScoped<IOptimizedRouteRequestValidator, OptimizedRouteRequestValidator>();
         }
     }
 }

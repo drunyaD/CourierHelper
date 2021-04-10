@@ -19,8 +19,11 @@ namespace BusinessLogic.Services
             _configProvider = configProvider;
         }
 
-        public async Task<OptimizedRoute> GetOptimizedRouteAsync(List<LocationInfo> locationInfos)
+        public async Task<OptimizedRoute> GetOptimizedRouteAsync(LocationInfo startLocation, List<LocationInfo> locationsToVisit)
         {
+            var locationInfos = new List<LocationInfo> { startLocation };
+            locationInfos.AddRange(locationsToVisit);
+
             var config = _configProvider.ProvideConfig(locationInfos.Count);
             var duelistAlgo = new DuelistAlgorithm<LocationInfo>(locationInfos, config);
 
