@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp", "ConsoleApp\Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{6E4FEB35-2D5F-4A40-9B8A-4D1258F42E72}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChartHelper", "ChartHelper\ChartHelper.csproj", "{63D1D5A6-E2A6-4464-9434-78C26EA529F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChartHelper", "ChartHelper\ChartHelper.csproj", "{63D1D5A6-E2A6-4464-9434-78C26EA529F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{CDFF133A-476B-4957-9164-962EE1A941C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{CDFF133A-476B-4957-9164-962EE1A941C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourierHelper.Host", "CourierHelper.Host\CourierHelper.Host.csproj", "{CBB664C8-2136-45A8-996B-613706B03DAA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{CDFF133A-476B-4957-9164-962EE1A941C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDFF133A-476B-4957-9164-962EE1A941C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDFF133A-476B-4957-9164-962EE1A941C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBB664C8-2136-45A8-996B-613706B03DAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBB664C8-2136-45A8-996B-613706B03DAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBB664C8-2136-45A8-996B-613706B03DAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBB664C8-2136-45A8-996B-613706B03DAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

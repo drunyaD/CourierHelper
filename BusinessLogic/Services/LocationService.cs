@@ -18,6 +18,11 @@ namespace BusinessLogic.Services
 
         public async Task<LocationInfo> GetLocationInfoAsync(string searchString)
         {
+            if (searchString == null)
+            {
+                throw new ValidationException("Search string should be provided");
+            }
+
             var response = await _dataService.GetGeocodeResponseAsync(searchString);
             if (response.Status != GeocodeStatusCode.OK)
             {
