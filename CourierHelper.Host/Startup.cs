@@ -29,7 +29,7 @@ namespace CourierHelper.Host
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            BllInjectionModule.Configure(services, "");
+            BllInjectionModule.Configure(services, Environment.GetEnvironmentVariable("GOOGLE_MAP_API_KEY"));
             HostInjectionModule.Configure(services);
             services.AddControllers();
         }
