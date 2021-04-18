@@ -54,7 +54,9 @@ namespace BusinessLogic.Services
                 }
                 segments.Add(new Segment
                 {
-                    Coordinates = coordinates
+                    Coordinates = coordinates,
+                    FromAddress = l.StartAddress,
+                    ToAddress = l.EndAddress
                 });
             }
 
