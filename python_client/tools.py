@@ -20,12 +20,18 @@ def get_recorded_location_infos():
         data = json.load(json_file)
         return data
 
-def get_optimized_route(locations):
+def record_optimized_route(locations):
     payload = {
         'startLocation': locations[0],
         'locationsToVisit': locations[1:]
     }
     response = requests.post(url = optimized_route_url, json = payload, verify=False)
     data = response.json()
-    return data
+
+    with open('optimized_route.txt', 'w') as outfile:
+        json.dump(data, outfile)
     
+def get_recorded_optimized_route():
+    with open('optimized_route.txt') as json_file:
+        data = json.load(json_file)
+        return data
