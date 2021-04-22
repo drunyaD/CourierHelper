@@ -23,6 +23,7 @@ namespace BusinessLogic.Services
         {
             var locationInfos = new List<LocationInfo> { startLocation };
             locationInfos.AddRange(locationsToVisit);
+            locationInfos.Add(startLocation);
 
             var config = _configProvider.ProvideConfig(locationInfos.Count);
             var duelistAlgo = new DuelistAlgorithm<LocationInfo>(locationInfos, config);

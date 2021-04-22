@@ -68,13 +68,15 @@ namespace BusinessLogic.Calculation
                 var duelist = new List<int>();
                 // First point should not be changed
                 duelist.Add(0);
-                var remainingSkills = Enumerable.Range(1, _n - 1).ToList();
+                var remainingSkills = Enumerable.Range(1, _n - 2).ToList();
                 while (remainingSkills.Count != 0)
                 {
                     int skillNumber = _random.Next(remainingSkills.Count);
                     duelist.Add(remainingSkills[skillNumber]);
                     remainingSkills.RemoveAt(skillNumber);
                 }
+                // Last point should not be changed
+                duelist.Add(0);
                 _duelistsPoolToStrength.Add(duelist, 0);
             }
         }
@@ -181,12 +183,12 @@ namespace BusinessLogic.Calculation
             var newWinner = new List<int>(winner); 
             // Winner is trying new thing (swap two skills)
             var availableSkills = new List<int>(newWinner);
-            var firstSkillIndex = _random.Next(1, _n);
+            var firstSkillIndex = _random.Next(1, _n - 1);
             var firstSkill = availableSkills[firstSkillIndex];
 
             availableSkills.RemoveAt(firstSkillIndex);
 
-            var secondSkillIndex = _random.Next(1, _n - 1);
+            var secondSkillIndex = _random.Next(1, _n - 2);
             var secondSkill = availableSkills[secondSkillIndex];
 
             newWinner[winner.IndexOf(firstSkill)] = secondSkill;
@@ -228,7 +230,7 @@ namespace BusinessLogic.Calculation
                 newLooser.AddRange(looser.Take(firstPartCount));
 
                 var indexInWinnerToSkill = new SortedDictionary<int, int>();
-                for (int i = firstPartCount; i < _n; i++)
+                for (int i = firstPartCount; i < _n - 1; i++)
                 {
                     var skill = looser[i];
                     var indexInWinner = winner.IndexOf(skill);
@@ -238,7 +240,9 @@ namespace BusinessLogic.Calculation
                 foreach (var indexToSkill in indexInWinnerToSkill)
                 {
                     newLooser.Add(indexToSkill.Value);
-                }             
+                }
+
+                newLooser.Add(0);
             }
 
             return newLooser;
