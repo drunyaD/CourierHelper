@@ -13,8 +13,8 @@ namespace BusinessLogic.Calculation
                 championCount++;
             }
             double luckCoef = 0.2;
-            int iterationCount = 1000;
-            int strengthNotChangeIterCount = 100;
+            int iterationCount = 10000;
+            int strengthNotChangeIterCount = 500;
 
             return new AlgorithmConfig
             {
