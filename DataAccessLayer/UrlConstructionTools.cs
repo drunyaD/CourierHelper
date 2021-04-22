@@ -18,8 +18,9 @@ namespace DataAccessLayer
         {
             var origin = addresses.First();
             var destination = addresses.Last();
+            var travelModeStr = travelMode.ToString().ToLower();
 
-            var url = $"{_directionEndpoint}?mode={travelMode}&origin={origin}&destination={destination}&key={key}";
+            var url = $"{_directionEndpoint}?mode={travelModeStr}&origin={origin}&destination={destination}&key={key}";
 
             if (addresses.Count > 2)
             {
@@ -36,8 +37,9 @@ namespace DataAccessLayer
 
             var origin = placeIdsWithPrefix.First();
             var destination = placeIdsWithPrefix.Last();
+            var travelModeStr = travelMode.ToString().ToLower(); 
 
-            var url = $"{_directionEndpoint}?mode={travelMode}&origin={origin}&destination={destination}&key={key}";
+            var url = $"{_directionEndpoint}?mode={travelModeStr}&origin={origin}&destination={destination}&key={key}";
 
             if (placeIdsWithPrefix.Count > 2)
             {
